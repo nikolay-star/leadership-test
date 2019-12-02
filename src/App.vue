@@ -1,28 +1,61 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Welcome
+      v-if="!isRegistered"
+      @submitForm="onSubmitForm" />
+
+    <Description
+      v-if="isRegistered && !isStarted"
+      @testStarted="isStarted = true" />
+
+    <TestList
+      v-if="isRegistered && isStarted && !isFinished"
+      @testFinished="onTestFinished"
+    />
+
+    <Results
+      v-if="isFinished"
+      :resultsList="results"
+      :disbalanceResults="disbalanceResults"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import './assets/css/main.css';
+import Welcome from './components/Welcome.vue'
+import Description from '@/components/Description'
+import TestList from '@/components/TestList'
+import Results from '@/components/Results'
 
 export default {
   name: 'app',
+  data: () => {
+    return {
+      isRegistered: false,
+      isStarted: false,
+      isFinished: false,
+      results: {},
+      disbalanceResults: {}
+    }
+  },
   components: {
-    HelloWorld
+    Results,
+    TestList,
+    Description,
+    Welcome
+  },
+  methods: {
+    onSubmitForm() {
+      // TODO: add ajax
+      this.isRegistered = true;
+    },
+    onTestFinished(res) {
+      this.results = res.results;
+      this.disbalanceResults = res.disbalanceResults;
+      this.isFinished = true;
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

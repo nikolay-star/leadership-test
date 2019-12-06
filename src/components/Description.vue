@@ -11,7 +11,7 @@
       Мы уверены, что Вы знаете, как нужно поступить в 20 нижеприведенных ситуациях, но в жизни, в условиях насыщенного графика, под давлением трудностей и бюджетных ограничений, мы поступаем так, как привыкли.
       Чтобы повысить мастерство руководителя, пожалуйста, выбирайте тот вариант действий, который Вы выбираете в подобных ситуациях в реальной жизни.
       <br><br>
-      <strong>На каждую ситуацию у Вас будет 1,5 минуты.</strong>
+      <strong>На каждую ситуацию у Вас будет <nobr>1,5 минуты.</nobr></strong>
     </p>
 
     <button class="description__btn" @click="$emit('testStarted')">
@@ -47,30 +47,28 @@
     &__title {
       font-weight: bold;
       font-size: 20px;
-      line-height: 24px;
+      line-height: 1.3em;
       color: #000000;
       margin-bottom: 26px;
 
       @media (max-width: 500px) {
         font-size: 17px;
-        line-height: 20px;
       }
     }
 
     &__text {
       font-size: 13px;
-      line-height: 17px;
+      line-height: 1.3em;
       color: #000000;
       max-width: 90%;
-      margin: 0 auto 80px;
-
-      @media (max-width: 500px) {
-        font-size: 12px;
-        line-height: 15px;
-      }
+      margin: 0 auto 60px;
+      text-align: justify;
 
       strong {
         font-weight: 600;
+        font-size: 1.2em;
+        text-align: center;
+        display: block;
       }
     }
 

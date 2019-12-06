@@ -76,13 +76,22 @@
         font-size: 15px;
         line-height: 20px;
         color: #000000;
+
+        @media (max-width: 500px) {
+          font-size: 13px;
+          line-height: 18px;
+        }
       }
 
       &-number {
         font-weight: 900;
         font-size: 64px;
-        line-height: 20px;
         color: #F12E45;
+
+        @media (max-width: 500px) {
+          font-size: 36px;
+          line-height: 1em;
+        }
       }
     }
 

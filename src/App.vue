@@ -2,7 +2,7 @@
   <div id="app">
     <Welcome
       v-if="!isRegistered"
-      @submitForm="onSubmitForm" />
+      @submitForm="onSubmitForm"/>
 
     <Description
       v-if="isRegistered && !isStarted"
@@ -17,11 +17,14 @@
       v-if="isFinished"
       :resultsList="results"
       :disbalanceResults="disbalanceResults"
+      :resultsStat="resultsStat"
+      @saveCanvasImgs="onSaveImgs"
     />
   </div>
 </template>
 
 <script>
+import { post } from 'axios';
 import './assets/css/main.css';
 import Welcome from './components/Welcome.vue'
 import Description from '@/components/Description'
@@ -36,7 +39,10 @@ export default {
       isStarted: false,
       isFinished: false,
       results: {},
-      disbalanceResults: {}
+      disbalanceResults: {},
+      resultsStat: {},
+      userData: {},
+      resultImgs: {}
     }
   },
   components: {
@@ -46,13 +52,29 @@ export default {
     Welcome
   },
   methods: {
-    onSubmitForm() {
-      // TODO: add ajax
+    onSubmitForm(formData) {
+      this.userData = formData;
       this.isRegistered = true;
+    },
+    async onSaveImgs(imgs) {
+      this.resultImgs = imgs;
+
+      let bodyFormData = new FormData();
+      let bodyData = {
+        ...this.userData,
+        ...this.resultImgs
+      }
+
+      for (let item in bodyData) {
+        bodyFormData.append(item, bodyData[item])
+      }
+
+      await post('/test/sendmessage.php', bodyFormData);
     },
     onTestFinished(res) {
       this.results = res.results;
       this.disbalanceResults = res.disbalanceResults;
+      this.resultsStat = res.resultsStat;
       this.isFinished = true;
     }
   }

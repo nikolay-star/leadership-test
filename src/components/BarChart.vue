@@ -1,19 +1,48 @@
 <script>
   import { Bar } from 'vue-chartjs'
 
+  const options = {
+    legend: {
+      display: false
+    },
+    maintainAspectRatio: false,
+    height: 100,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+          stepSize: 1
+        }
+      }]
+    },
+    responsive: true
+  };
+
   export default {
     name: 'BarChart',
     extends: Bar,
     props: {
-      chartdata: {
-        type: Object,
-        default: null
+      chartData: {
+        type: Array
+      },
+      chartLabels: {
+        type: Array
+      },
+      colors: {
+        type: Array
       }
     },
     mounted () {
-      // eslint-disable-next-line
-      console.log(this.chartData);
-      this.renderChart(this.chartdata)
+      this.renderChart({
+        labels: this.chartLabels,
+        datasets: [
+          {
+            data: this.chartData,
+            backgroundColor: this.colors,
+          }
+        ],
+      },
+      options)
     }
   }
 </script>

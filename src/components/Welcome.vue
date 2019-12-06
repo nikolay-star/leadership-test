@@ -14,17 +14,35 @@
         <div class="form__inline">
           <div class="form-control">
             <label class="form-control__label form-control__label_name">
-              <input type="text" class="form-control__input" required placeholder="Имя">
+              <input
+                v-model="formData.name"
+                name="name"
+                type="text"
+                class="form-control__input"
+                required
+                placeholder="Имя">
             </label>
           </div>
           <div class="form-control">
             <label class="form-control__label form-control__label_email">
-              <input type="email" class="form-control__input" required placeholder="E-mail">
+              <input
+                v-model="formData.email"
+                name="email"
+                type="email"
+                class="form-control__input"
+                required
+                placeholder="E-mail">
             </label>
           </div>
           <div class="form-control">
             <label class="form-control__label form-control__label_post">
-              <input type="text" class="form-control__input" required placeholder="Должность">
+              <input
+                v-model="formData.position"
+                name="position"
+                type="text"
+                class="form-control__input"
+                required
+                placeholder="Должность">
             </label>
           </div>
         </div>
@@ -47,9 +65,18 @@
 <script>
 export default {
   name: 'Welcome',
+  data() {
+    return {
+      formData: {
+        name: '',
+        email: '',
+        position: ''
+      }
+    }
+  },
   methods: {
     onSubmit() {
-      this.$emit('submitForm');
+      this.$emit('submitForm', this.formData);
     }
   }
 }
@@ -122,7 +149,9 @@ export default {
     &__inline {
       display: flex;
       flex-direction: row;
-      margin-bottom: 57px;
+      flex-wrap: wrap;
+      margin-bottom: 27px;
+      justify-content: center;
     }
 
     &__btn {
@@ -132,6 +161,7 @@ export default {
       border: none;
       background: #F12E45;
       cursor: pointer;
+      margin-bottom: 50px;
 
       &:hover {
         background: lighten(#F12E45, 3%);
@@ -149,8 +179,10 @@ export default {
   }
 
   .form-control {
-    &+& {
-      margin-left: 21px;
+    margin: 0 10px 10px;
+
+    @media (max-width: 500px) {
+      margin-bottom: 20px;
     }
 
     &__label {
